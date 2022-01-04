@@ -45,10 +45,12 @@ defmodule Control.MixProject do
       {:gettext, "~> 0.18"},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.5"},
-      {:opentelemetry_api, "~> 1.0.0-rc.4"},
-      {:opentelemetry, "~> 1.0.0-rc.4"},
-      {:opentelemetry_phoenix, "~> 1.0.0-rc.6"},
-      {:opentelemetry_liveview, "~> 1.0.0-rc.2"},
+      {:opentelemetry_api, "~> 1.0.0-rc"},
+      {:opentelemetry, "~> 1.0.0-rc"},
+      {:opentelemetry_phoenix, "~> 1.0.0-rc"},
+      {:opentelemetry_liveview, git: "git@github.com:aaronrenner/opentelemetry_liveview.git", branch: "ar-otel-1.0.0-rc.4"},
+
+#      {:opentelemetry_liveview, "~> 1.0.0-rc"},
     ]
   end
 

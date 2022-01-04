@@ -10,7 +10,7 @@ defmodule Control.Application do
     # OpenTelemetry.register_application_tracer(:control)
 
     OpentelemetryPhoenix.setup()
-    # OpentelemetryLiveView.setup()
+    OpentelemetryLiveView.setup()
 
     children = [
       # Start the Telemetry supervisor
