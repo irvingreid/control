@@ -14,8 +14,11 @@ end
 
 config :opentelemetry, :processors,
   otel_batch_processor: %{
-    exporter: {:otel_exporter_stdout, []}
+    exporter: {:opentelemetry_exporter, %{protocol: :grpc}}
   }
+  # otel_batch_processor: %{
+  #   exporter: {:otel_exporter_stdout, []}
+  # }
 
 if config_env() == :prod do
   # The secret key base is used to sign/encrypt cookies and other secrets.
