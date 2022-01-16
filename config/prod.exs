@@ -14,6 +14,11 @@ config :control, ControlWeb.Endpoint, cache_static_manifest: "priv/static/cache_
 # Do not print debug messages in production
 config :logger, level: :info
 
+config :opentelemetry, :processors,
+  otel_batch_processor: %{
+    exporter: {:opentelemetry_exporter, %{protocol: :grpc}}
+  }
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
