@@ -49,7 +49,8 @@ defmodule Control.MixProject do
       {:opentelemetry, "~> 1.0"},
       {:opentelemetry_exporter, "~> 1.0"},
       {:opentelemetry_phoenix, "~> 1.0.0-rc.7"},
-      {:opentelemetry_liveview, git: "git@github.com:aaronrenner/opentelemetry_liveview.git", branch: "ar-otel-1.0.0-rc.4"},
+      {:opentelemetry_liveview, "~> 1.0.0-rc"},
+#       {:opentelemetry_liveview, git: "git@github.com:aaronrenner/opentelemetry_liveview.git", branch: "ar-otel-1.0.0-rc.4"},
 
 #      {:opentelemetry_liveview, "~> 1.0.0-rc"},
     ]
