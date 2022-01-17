@@ -2,12 +2,29 @@ name: CI
 
 on:
   push:
-    branches: [dev,main]
+    branches: [main]
   pull_request:
     branches: [dev,main]
 
 env:
   MIX_ENV: test
+
+# jobs:
+#   test:
+#     runs-on: ubuntu-latest
+#     name: OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
+#     strategy:
+#       matrix:
+#         otp: ['20.3', '21.3', '22.2']
+#         elixir: ['1.8.2', '1.9.4']
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: erlef/setup-beam@v1
+#         with:
+#           otp-version: ${{matrix.otp}}
+#           elixir-version: ${{matrix.elixir}}
+#       - run: mix deps.get
+#       - run: mix test
 
 jobs:
   deps:
@@ -29,7 +46,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup
-        uses: actions/setup-elixir@v1
+        uses: erlef/setup-beam@v1
         with:
           elixir-version: ${{ matrix.elixir }}
           otp-version: ${{ matrix.otp }}
@@ -60,8 +77,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        elixir: [1.11]
-        otp: [23.2]
+        elixir: [1.13.1]
+        otp: [24.2]
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.6.0
@@ -74,7 +91,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup
-        uses: actions/setup-elixir@v1
+        uses: erlef/setup-beam@v1
         with:
           elixir-version: ${{ matrix.elixir }}
           otp-version: ${{ matrix.otp }}
@@ -105,8 +122,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        elixir: [1.11]
-        otp: [23.2]
+        elixir: [1.13.1]
+        otp: [24.2]
     steps:
       - name: Cancel Previous Runs
         uses: styfle/cancel-workflow-action@0.6.0
@@ -119,7 +136,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup
-        uses: actions/setup-elixir@v1
+        uses: erlef/setup-beam@v1
         with:
           elixir-version: ${{ matrix.elixir }}
           otp-version: ${{ matrix.otp }}
