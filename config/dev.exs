@@ -73,3 +73,8 @@ config :opentelemetry, :processors,
   otel_batch_processor: %{
     exporter: {:opentelemetry_exporter, %{protocol: :grpc}}
   }
+
+config :control, ExUps.Connection,
+  host: '192.168.1.2',
+  port: 3493,
+  timeout: 5000

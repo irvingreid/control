@@ -19,6 +19,11 @@ config :opentelemetry, :processors,
     exporter: {:opentelemetry_exporter, %{protocol: :grpc}}
   }
 
+config :control, ExUps.Connection,
+  host: '192.168.1.2',
+  port: 3493,
+  timeout: 5000
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key

@@ -18,9 +18,9 @@ defmodule Control.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Control.PubSub},
       # Start the Endpoint (http/https)
-      ControlWeb.Endpoint
+      ControlWeb.Endpoint,
       # Start a worker by calling: Control.Worker.start_link(arg)
-      # {Control.Worker, arg}
+      ExUps.Connection
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

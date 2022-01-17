@@ -11,7 +11,7 @@ defmodule ExUps.Connection do
   require OpenTelemetry.Tracer, as: Tracer
 
   @spec send(ExUps.Connection, iodata()) :: any
-  def send(conn, data), do: Connection.call(conn, {:send, data})
+  def send(conn, data), do: Connection.call(conn, {:send, [data | '\n']})
 
   @spec recv(any, any, any) :: any
   def recv(conn, bytes, timeout \\ 3000) do
@@ -19,21 +19,37 @@ defmodule ExUps.Connection do
   end
 
   # external API for process lifecycle
-  def start_link(host, port, opts, timeout \\ 5000) do
-    Connection.start_link(__MODULE__, {host, port, opts, timeout})
+  def child_spec(opts) do
+    %{
+      id: __MODULE__,
+      start: {__MODULE__, :start_link, [opts]},
+      type: :worker,
+      restart: :permanent,
+      shutdown: 500
+    }
+  end
+
+  def start_link(opts) do
+    conf = Application.fetch_env!(:control, ExUps.Connection)
+
+    Connection.start_link(__MODULE__, {conf[:host], conf[:port], opts, conf[:timeout]},
+      name: __MODULE__
+    )
   end
 
   @spec close(any) :: any
   def close(conn), do: Connection.call(conn, :close)
 
-  @type state :: %{host: any(),
-  port: any(),
-  opts: any(),
-  timeout: integer,
-  sock: any(),
-  buffer: String.t,
-  category: [any()],
-  accum: [[any()]]}
+  @type state :: %{
+          host: String.t(),
+          port: integer,
+          opts: [any()],
+          timeout: integer,
+          sock: any(),
+          buffer: String.t(),
+          category: [any()],
+          accum: [[any()]]
+        }
 
   def init({host, port, opts, timeout}) do
     s = %{
@@ -56,8 +72,7 @@ defmodule ExUps.Connection do
         %{sock: nil, host: host, port: port, opts: opts, timeout: timeout} = s
       ) do
     options = [active: :once] ++ opts
-    {:ok, addr} = :inet.parse_address(host)
-    IO.puts("connect: #{inspect(addr)}:#{port} (#{inspect(options)}), timeout: #{timeout}")
+    IO.puts("connect: #{inspect(host)}:#{port} (#{inspect(options)}), timeout: #{timeout}")
 
     case :gen_tcp.connect(host, port, options, timeout) do
       {:ok, sock} ->
@@ -166,6 +181,10 @@ defmodule ExUps.Connection do
     Tracer.add_event("ups-status", [
       {:ups_name, ups_name} | Enum.map(accum, fn [:var, _, key, val] -> {key, val} end)
     ])
+
+    IO.puts(
+      inspect([{:ups_name, ups_name} | Enum.map(accum, fn [:var, _, key, val] -> {key, val} end)])
+    )
 
     %{s | category: [], accum: []}
   end
