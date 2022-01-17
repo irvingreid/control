@@ -26,6 +26,15 @@ defmodule ExUps.Connection do
   @spec close(any) :: any
   def close(conn), do: Connection.call(conn, :close)
 
+  @type state :: %{host: any(),
+  port: any(),
+  opts: any(),
+  timeout: integer,
+  sock: any(),
+  buffer: String.t,
+  category: [any()],
+  accum: [[any()]]}
+
   def init({host, port, opts, timeout}) do
     s = %{
       host: host,
@@ -67,11 +76,11 @@ defmodule ExUps.Connection do
         Connection.reply(from, :ok)
 
       {:error, :closed} ->
-        :error_logger.format("Connection closed~n", [])
+        :error_logger.format('Connection closed~n', [])
 
       {:error, reason} ->
         reason = :inet.format_error(reason)
-        :error_logger.format("Connection error: ~s~n", [reason])
+        :error_logger.format('Connection error: ~s~n', [reason])
     end
 
     {:connect, :reconnect, %{s | sock: nil}}
@@ -161,10 +170,11 @@ defmodule ExUps.Connection do
     %{s | category: [], accum: []}
   end
 
+  @spec handle_line([any()], state) :: state
   defp handle_line([:end | category] = line, %{category: category, accum: accum} = s) do
     # credo:disable-for-lines:2 Credo.Check.Warning.IoInspect
     IO.inspect(line)
-    Enum.each(accum, &IO.inspect/2)
+    Enum.each(accum, &IO.inspect/1)
     %{s | category: [], accum: []}
   end
 end
