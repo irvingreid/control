@@ -162,6 +162,7 @@ defmodule ExUps.Connection do
   end
 
   defp handle_line([:end | category] = line, %{category: category, accum: accum} = s) do
+    # credo:disable-for-lines:2 Credo.Check.Warning.IoInspect
     IO.inspect(line)
     Enum.each(accum, &IO.inspect/2)
     %{s | category: [], accum: []}
