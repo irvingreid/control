@@ -1,9 +1,7 @@
-# Send messages to upsd, parse results
-
-defmodule ExUps.Protocol do
-end
-
 defmodule ExUps.Parsers do
+  @moduledoc """
+  Parsers for the various line formats we expect to receive from upsd
+  """
   import NimbleParsec
 
   newline = choice([string("\r\n"), string("\n")])

@@ -3,6 +3,10 @@
 defmodule ExUps.Connection do
   use Connection
 
+  @moduledoc """
+  Send commands to upsd over TCP, asynchronously parse and process the results.
+  Supports only the bits of the upsd protocol I need for my home monitoring application.
+  """
   alias ExUps.Parsers
   require OpenTelemetry.Tracer, as: Tracer
 
