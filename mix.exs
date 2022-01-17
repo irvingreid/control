@@ -33,6 +33,8 @@ defmodule Control.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:credo, "~> 1.4", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false},
       {:phoenix, "~> 1.6.5"},
       {:phoenix_html, "~> 3.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
@@ -51,7 +53,7 @@ defmodule Control.MixProject do
       {:opentelemetry_phoenix, "~> 1.0.0-rc.7"},
       {:opentelemetry_liveview, "~> 1.0.0-rc"},
       {:nimble_parsec, "~> 1.2"},
-      {:connection, "~> 1.1"},
+      {:connection, "~> 1.1"}
     ]
   end
 

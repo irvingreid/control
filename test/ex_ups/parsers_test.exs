@@ -16,6 +16,7 @@ defmodule ExUps.ParsersTest do
   end
 
   test "parse line with leftovers" do
-    assert {:ok, [:var, "ups", "this.that", "HELLO!\\"], "leftovers", _, _, _} = Parsers.parse_line("VAR ups this.that \"HELLO!\\\\\"\nleftovers")
+    assert {:ok, [:var, "ups", "this.that", "HELLO!\\"], "leftovers", _, _, _} =
+             Parsers.parse_line("VAR ups this.that \"HELLO!\\\\\"\nleftovers")
   end
 end
