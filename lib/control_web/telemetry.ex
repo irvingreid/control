@@ -1,4 +1,7 @@
 defmodule ControlWeb.Telemetry do
+  @moduledoc """
+  Default Phoenix metrics
+  """
   use Supervisor
   import Telemetry.Metrics
 
