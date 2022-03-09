@@ -14,10 +14,7 @@ config :control, ControlWeb.Endpoint, cache_static_manifest: "priv/static/cache_
 # Do not print debug messages in production
 config :logger, level: :info
 
-config :opentelemetry, :processors,
-  otel_batch_processor: %{
-    exporter: {:opentelemetry_exporter, %{protocol: :grpc}}
-  }
+import_config "otel_honey.exs"
 
 config :control, ExUps.Connection,
   host: '192.168.1.2',

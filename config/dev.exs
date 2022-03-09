@@ -68,11 +68,8 @@ config :phoenix, :stacktrace_depth, 20
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
 
-# development environment can send telemetry, as a treat
-config :opentelemetry, :processors,
-  otel_batch_processor: %{
-    exporter: {:opentelemetry_exporter, %{protocol: :grpc}}
-  }
+import_config "otel_stdout.exs"
+# import_config "otel_honey.exs"
 
 config :control, ExUps.Connection,
   host: '192.168.1.2',
