@@ -20,6 +20,10 @@ defmodule ControlWeb.Router do
     get "/", PageController, :index
   end
 
+  scope "/one_job", ControlWeb do
+    live "/", OneJobLive
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", ControlWeb do
   #   pipe_through :api
