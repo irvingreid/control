@@ -30,11 +30,13 @@ defmodule ExUps.Connection do
   end
 
   def start_link(opts) do
-    conf = Application.fetch_env!(:control, ExUps.Connection)
-
-    Connection.start_link(__MODULE__, {conf[:host], conf[:port], opts, conf[:timeout]},
-      name: __MODULE__
-    )
+    with {:ok, conf} = Application.fetch_env(:control, ExUps.Connection) do
+      Connection.start_link(__MODULE__, {conf[:host], conf[:port], opts, conf[:timeout]},
+        name: __MODULE__
+      )
+    else
+      err -> err
+    end
   end
 
   @spec close(any) :: any
